@@ -9,9 +9,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Core interactive loop and high-level orchestration.
- */
 class Shell {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -22,21 +19,18 @@ class Shell {
             System.out.print("jsh>> ");
             String line = reader.readLine();
             if (line == null) {
-                break; // EOF
+                break;
             }
             line = line.trim();
             if (line.isEmpty()) {
                 continue;
             }
 
-            // History expansion for !n and !# before storing
             String expanded = expandHistory(line);
             if (expanded == null) {
-                // invalid history reference
                 continue;
             }
 
-            // Store the raw or expanded command as one entry
             state.getHistory().addRaw(expanded);
 
             if ("exit".equals(expanded)) {
@@ -78,14 +72,12 @@ class Shell {
                 }
                 return cmd;
             } catch (NumberFormatException ex) {
-                // not a history invocation, treat normal
             }
         }
         return line;
     }
 
     private void executeForeground(Parser.Command cmd) {
-        // built-ins first
         switch (cmd.program) {
             case "cd":
                 printHeader(cmd);
@@ -120,14 +112,12 @@ class Shell {
 
     private void executeBackgroundSequence(List<Parser.Command> sequence) {
         for (Parser.Command c : sequence) {
-            // exit no debe ejecutarse en secuencias en segundo plano
             if ("exit".equals(c.program)) {
                 continue;
             }
             int jobId = state.nextJobId();
             switch (c.program) {
                 case "cd":
-                    // built-in en segundo plano: no proceso del SO
                     printHeader(c);
                     handleCd(c);
                     System.out.println("[" + jobId + "] -1");
@@ -167,12 +157,10 @@ class Shell {
             Process p = pb.start();
             long pid = p.pid();
             if (background) {
-                // gobble asynchronously, but don't block
                 StreamGobbler.pipeAsync(p.getInputStream(), System.out);
                 StreamGobbler.pipeAsync(p.getErrorStream(), System.err);
                 return pid;
             } else {
-                // Collect to preserve relative order and header
                 BytesCollector outC = BytesCollector.start(p.getInputStream());
                 BytesCollector errC = BytesCollector.start(p.getErrorStream());
                 int code = p.waitFor();

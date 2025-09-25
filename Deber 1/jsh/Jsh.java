@@ -1,8 +1,5 @@
 package jsh;
 
-/**
- * Minimal shell loop entrypoint.
- */
 public class Jsh {
     public static void main(String[] args) throws Exception {
         Shell shell = new Shell();

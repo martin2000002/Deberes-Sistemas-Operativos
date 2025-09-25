@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-/**
- * Bounded FIFO history buffer with numbered listing.
- */
 class History {
     private final int capacity;
     private final Deque<String> buffer = new ArrayDeque<>();
-    private long startIndex = 1; // absolute number of the oldest entry
+    private long startIndex = 1;
 
     History(int capacity) {
         this.capacity = capacity;

@@ -7,7 +7,7 @@ class Parser {
     static class Command {
         final String program;
         final List<String> args;
-        final String inputFile; // may be null
+        final String inputFile;
         Command(String program, List<String> args, String inputFile) {
             this.program = program; this.args = args; this.inputFile = inputFile;
         }
@@ -23,7 +23,6 @@ class Parser {
                 if (sb.length()>0) sb.append(' ');
                 sb.append(t);
             }
-            // include input redirection in the rendered header
             if (inputFile != null) {
                 sb.append(" < ").append(inputFile);
             }
@@ -32,12 +31,11 @@ class Parser {
     }
 
     static class Line {
-        final List<Command> sequence; // split by &^
+        final List<Command> sequence;
         Line(List<Command> sequence) { this.sequence = sequence; }
         boolean isSequence() { return sequence.size() > 1; }
     }
 
-    // Parse a raw user input into sequence of commands (split by &^), supporting quotes and < input redirection per command.
     static Line parse(String raw) throws ParseException {
         List<String> seqParts = splitByBackgroundSeparator(raw);
         List<Command> sequence = new ArrayList<>();
