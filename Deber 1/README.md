@@ -1,4 +1,4 @@
-# Martín Montero (00328595) y Noah Palacios (00348958)
+# Martín Montero (00328595) y Noah Petillo (00348043)
 
 ## Contribución
 - Martín: Interpretación de comandos mediante `Parser.java`, captura de salidas en segundo plano sin bloquear procesos con `BytesCollector.java`, redirección en tiempo real de stdout/stderr a consola con `StreamGobbler.java`, impresión sincronizada para evitar salidas entremezcladas entre hilos con `SynchronizedPrinter.java`, y creación del `Dockerfile`.
