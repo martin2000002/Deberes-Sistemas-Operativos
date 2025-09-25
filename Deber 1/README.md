@@ -26,10 +26,12 @@
     java SimpleIO < input.txt
     ```
 
-- NOTA: Si se quiere probar con otros archivos, montar una carpeta del host en `/work` y agregar los arhivos que se quieran probar:
-  ```
-  docker run --rm -it -v "C:\RUTA\DEL\HOST:/work" martin200002/homework-1:javashell
-  ```
+> [!NOTE]
+> Para usar archivos propios, monte una carpeta del host en `/work` y agregue los archivos que quiera probar. Ejemplo:
+>
+> ```
+> docker run --rm -it -v "C:\RUTA\DEL\HOST:/work" martin200002/homework-1:javashell
+> ```
 
 ## Comentarios relevantes
 - `cd/pwd/echo/history` se manejan como built-ins también en background; se reporta PID `-1`.
